@@ -20,4 +20,9 @@
     owner: root
     group: root
     mode: 0644
+
+- name: Clean default index.html
+  file:
+    state: absent
+    path: /var/www/html/index.html
 # tasks file for server

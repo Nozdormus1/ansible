@@ -1,5 +1,5 @@
 ---
-wp_mysql_db: wordpress
-wp_mysql_user: wordpress
-wp_mysql_password: neifn
+task_mysql_db: task_db
+task_mysql_user: task_user
+task_mysql_password: hard_password
 # defaults file for mysql
