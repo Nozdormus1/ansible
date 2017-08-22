@@ -1,0 +1,25 @@
+---
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  sudo: yes
+
+- name: Install required software
+  apt: name={{ item }} state=present
+  sudo: yes
+  with_items:
+    - mysql-server
+    - python-mysqldb
+
+- name: Create mysql database
+  mysql_db:
+    name={{ wp_mysql_db }}
+    state=present
+  sudo: yes
+
+- name: Create mysql user
+  mysql_user: 
+    name={{ wp_mysql_user }} 
+    password={{ wp_mysql_password }} 
+    priv=*.*:ALL
+  sudo: yes
+# tasks file for mysql
