@@ -27,7 +27,7 @@
 # Creating table in {{ task_mysql_db }}
 - name: copy_mysql_table
   copy:
-    src: ../files/task_table.sql
+    src: task_table.sql
     dest: /tmp/task_table.sql
     owner: root
     group: root
@@ -42,7 +42,7 @@
 # Coping config file and callig for hendler which will restart the service
 - name: copy_mysql_config
   copy:
-    src: ../files/my.cnf
+    src: my.cnf
     dest: /etc/mysql/my.cnf
     owner: root
     group: root

@@ -16,7 +16,7 @@
 
 # Adding index.php to /var/www/html directory
 - template:
-    src: ../templates/index.j2
+    src: index.php.j2
     dest: /var/www/html/index.php
     owner: root
     group: root

@@ -31,11 +31,22 @@
     $result = mysqli_query($conn,$sql);
   }
 
+  $sql2 = "SELECT date, text FROM pet";
+  $result = $conn->query($sql2);
+
+  if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "date: " . $row["date"]. " - text: " . $row["text"]. "<br>";
+    }
+  } else {
+    echo "0 results";
+  }
 ?>
 
 <form action="index.php" method="post">
 <label id="first"> Text:</label><br/>
-<input type="text" name="text"><br/>
+<input type="text" name="text" maxlength="200"><br/>
 
 <button type="submit" name="save">save</button>
 
