@@ -1,5 +1,5 @@
 ---
+task_ip_db: 10.0.1.13
 task_mysql_db: task_db
 task_mysql_user: task_user
 task_mysql_password: hard_password
-# defaults file for mysql

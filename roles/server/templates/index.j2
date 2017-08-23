@@ -15,7 +15,7 @@
 <body>
 
 <?php
-  $conn=mysqli_connect("10.0.1.13","task_user","hard_password","task_db");
+  $conn=mysqli_connect("{{ task_ip_db }}","{{ task_mysql_user }}","{{ task_mysql_password }}","{{ task_mysql_db }}");
 
   if(!$conn)
   {

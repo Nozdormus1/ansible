@@ -14,13 +14,15 @@
     - libapache2-mod-php5
     - php5-mcrypt
 
-- copy:
-    src: ../files/index.php
+# Adding index.php to /var/www/html directory
+- template:
+    src: ../templates/index.j2
     dest: /var/www/html/index.php
     owner: root
     group: root
     mode: 0644
 
+# Removing index.html
 - name: Clean default index.html
   file:
     state: absent

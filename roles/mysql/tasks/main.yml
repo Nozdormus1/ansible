@@ -24,6 +24,22 @@
     host="%"
   sudo: yes
 
+# Creating table in {{ task_mysql_db }}
+- name: copy_mysql_table
+  copy:
+    src: ../files/task_table.sql
+    dest: /tmp/task_table.sql
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create mysql table
+  mysql_db:
+    name={{ task_mysql_db }}
+    state=import
+    target=/tmp/task_table.sql
+
+# Coping config file and callig for hendler which will restart the service
 - name: copy_mysql_config
   copy:
     src: ../files/my.cnf

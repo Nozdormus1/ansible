@@ -1,0 +1,1 @@
+CREATE TABLE pet (date DATE, text VARCHAR(200));
