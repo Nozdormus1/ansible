@@ -1,48 +1,34 @@
 ---
-- name: Update apt cache
-  apt: update_cache=yes cache_valid_time=3600
-  sudo: yes
+- name: Update yum cache
+  yum:
+    update_cache=yes 
+    cache_valid_time=3600
+  become: true
 
 - name: Install required software
-  apt: name={{ item }} state=present
-  sudo: yes
+  yum:
+    name={{ item }}
+    state=present
   with_items:
     - mysql-server
-    - python-mysqldb
+    - MySQL-python
+  become: true
 
-- name: Create mysql database
-  mysql_db:
-    name={{ task_mysql_db }}
-    state=present
-  sudo: yes
-
-- name: Create mysql user
+- name: Set rot password
   mysql_user: 
-    name={{ task_mysql_user }} 
+    name=root 
     password={{ task_mysql_password }} 
-    priv=*.*:ALL
-    host="%"
-  sudo: yes
+    host=localhost
+  become: true
 
-# Creating table in {{ task_mysql_db }}
-- name: copy_mysql_table
-  copy:
-    src: task_table.sql
-    dest: /tmp/task_table.sql
-    owner: root
-    group: root
-    mode: 0644
-
-- name: Create mysql table
+- name: MySQL | Remove the MySQL test database
   mysql_db:
-    name={{ task_mysql_db }}
-    state=import
-    target=/tmp/task_table.sql
+    db=test
+    state=absent
+  become: true
 
-# Coping config file and callig for hendler which will restart the service
-- name: copy_mysql_config
-  copy:
-    src: my.cnf
+- template:
+    src: my.cnf.j2
     dest: /etc/mysql/my.cnf
     owner: root
     group: root

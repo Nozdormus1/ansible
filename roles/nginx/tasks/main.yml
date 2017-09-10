@@ -1,0 +1,31 @@
+---
+- name: Update yum cache
+  yum:
+    update_cache=yes
+    cache_valid_time=3600
+  become: true
+
+# Installing all necessary components
+- name: Install required software
+  yum:
+    name={{ item }}
+    state=present
+  become: true
+  with_items:
+    - nginx
+
+- template:
+    src: test_task.conf.j2
+    dest: /etc/nginx/conf.d/test_task.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nginx
+
+# Adding index.html to /var/www/html directory
+- template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0644
