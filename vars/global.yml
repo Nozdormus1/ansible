@@ -1,3 +1,3 @@
 ---
 task_mysql_password: hard_password
-mysql_mem: "{{ ansible_memtotal_mb * .8 }}"
+mysql_mem: "{{ (ansible_memtotal_mb * 0.8)|int }}"
