@@ -7,24 +7,38 @@
 
 - name: Install required software
   yum:
-    name: {{ item }}
+    name: "{{ item }}"
     state: present
   with_items:
     - mysql-server
-    - MySQL-python
+    - mysql-devel
   become: true
 
-- name: Set rot password
-  mysql_user: 
-    name=root 
-    password={{ task_mysql_password }} 
-    host=localhost
+- name: Upgrade pip
+  pip:
+    name: pip
+    extra_args: --upgrade
+
+- name: Install the Python MySQLB module
+  pip:
+    name: MySQL-python
   become: true
+
+- service:
+    name: mysqld
+    state: started
 
 - name: MySQL | Remove the MySQL test database
   mysql_db:
-    db=test
-    state=absent
+    db: test
+    state: absent
+  become: true
+
+- name: Set root password
+  mysql_user:
+    name: root
+    password: "{{ task_mysql_password }}"
+    host: localhost
   become: true
 
 - template:
