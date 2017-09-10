@@ -4,4 +4,6 @@
     - vars/global.yml
 
   roles:
-    - server
+    - php
+    - httpd
+    - nginx

@@ -1,15 +1,15 @@
 ---
 - name: Update yum cache
   yum:
-    update_cache=yes
-    cache_valid_time=3600
+    name: '*'
+    update_cache: yes
   become: true
 
 # Installing all necessary components
 - name: Install required software
   yum:
-    name={{ item }}
-    state=present
+    name: "{{ item }}"
+    state: present
   become: true
   with_items:
     - httpd
@@ -22,5 +22,9 @@
     group: root
     mode: 0644
   notify: restart httpd
+
+- service:
+    name: httpd
+    state: started
 
 # tasks file for server
